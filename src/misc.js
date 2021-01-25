@@ -3,9 +3,7 @@ const { URLSearchParams } = require('url');
 
 const handleResponse = async response => {
 	const parsedResponse = await response.json();
-	if (!response.ok) {
-		throw Error(parsedResponse.status.message);
-	}
+	if (!response.ok) throw Error(parsedResponse.status.message);
 	return parsedResponse;
 };
 
@@ -33,5 +31,9 @@ module.exports = {
 		else {
 			return false;
 		}
+	},
+	getUserIdFromMention: mention => {
+		const discordIdData = mention.match(/^<@!?(\d+)>$/);
+		return discordIdData ? discordIdData[1] : null;
 	},
 };
