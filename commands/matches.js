@@ -93,10 +93,11 @@ module.exports = {
 	description: 'Shows a player\'s previous match(es)',
 	execute: async (message, args) => {
 		try {
+			if (args.length > 2 || args.length < 1) throw Error('Please supply a discord mention or a summoner username, and optionally how many matches you would like to see');
 			const [username, ...rest] = args;
 			const targetUsername = await produceTargetUsername(username);
 			const currUser = await fetchContent(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${targetUsername}`);
-			const matchHistory = await fetchContent(`https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/${currUser.accountId}`, ['endIndex', isNumberArgumentGiven(rest[0]) && parseInt(rest[0]) <= 5 ? rest[0] : 1]);
+			const matchHistory = await fetchContent(`https://na1.api.riotgames.com/lol/match/v4/matchlists/by-account/${currUser.accountId}`, ['endIndex', isNumberArgumentGiven(rest[0]) && parseInt(rest[0]) <= 3 ? rest[0] : 1]);
 			const matchesInfo = await Promise.all(matchHistory.matches.map(async match => await fetchContent(`https://na1.api.riotgames.com/lol/match/v4/matches/${match.gameId}`)));
 			const championInfo = await fetchContent('http://ddragon.leagueoflegends.com/cdn/11.2.1/data/en_US/champion.json');
 			matchesInfo.forEach((match, index) => {
