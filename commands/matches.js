@@ -3,7 +3,7 @@ const { database, tableName } = require('../database');
 
 const convertUnixToDate = time => {
 	const dateObject = new Date(time);
-	return dateObject.toLocaleString();
+	return dateObject.toLocaleString('en-US', { timeZone: 'Canada/Pacific' });
 };
 
 const secondsToMinutesSeconds = seconds => (seconds - (seconds %= 60)) / 60 + (seconds > 9 ? ':' : ':0') + seconds;
