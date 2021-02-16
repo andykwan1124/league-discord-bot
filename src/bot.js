@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Client, Collection } = require('discord.js');
 const fs = require('fs');
 
-const PREFIX = '?';
+const PREFIX = ',';
 const client = new Client();
 client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
